@@ -1,8 +1,8 @@
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.jupiter.api.LocalDate;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assert.*;
 
 public class ReservationTest {
 

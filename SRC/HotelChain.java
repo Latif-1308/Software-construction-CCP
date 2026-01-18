@@ -13,7 +13,6 @@ public class HotelChain {
         if (reservation == null)
             throw new IllegalArgumentException("Reservation cannot be null");
     }
-
     public boolean canMakeReservation() {
         return true;
     }

@@ -1,70 +1,87 @@
-import org.junit.jupiter.api.Before;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assert.*;
+import java.time.LocalDate;
 
 public class HotelChainTest {
 
     private HotelChain hotelChain;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         hotelChain = new HotelChain();
     }
 
     // ---------- makeReservation() tests ----------
 
-    @Test(expected = IllegalArgumentException.class)
-    public void makeReservation_nullReservation_throwsException() {
-        hotelChain.makeReservation(null);
+    @Test
+    void makeReservation_nullReservation_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            hotelChain.makeReservation(null);
+        });
     }
 
     @Test
-    public void makeReservation_validReservation_noException() {
-        Reservation reservation = new Reservation();
-        hotelChain.makeReservation(reservation);
+    void makeReservation_validReservation_noException() {
+        Reservation reservation = Reservation.create(
+                LocalDate.now(),               // reservationDate
+                LocalDate.now().plusDays(1),   // startDate
+                LocalDate.now().plusDays(3),   // endDate
+                1                               // number
+        );
+
+        assertDoesNotThrow(() -> hotelChain.makeReservation(reservation));
     }
 
     // ---------- cancelReservation() tests ----------
 
-    @Test(expected = IllegalArgumentException.class)
-    public void cancelReservation_nullReservation_throwsException() {
-        hotelChain.cancelReservation(null);
+    @Test
+    void cancelReservation_nullReservation_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            hotelChain.cancelReservation(null);
+        });
     }
 
     @Test
-    public void cancelReservation_validReservation_noException() {
-        Reservation reservation = new Reservation();
-        hotelChain.cancelReservation(reservation);
+    void cancelReservation_validReservation_noException() {
+        Reservation reservation = Reservation.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(3),
+                1
+        );
+
+        assertDoesNotThrow(() -> hotelChain.cancelReservation(reservation));
     }
 
     // ---------- capability checks ----------
 
     @Test
-    public void canMakeReservation_returnsTrue() {
+    void canMakeReservation_returnsTrue() {
         assertTrue(hotelChain.canMakeReservation());
     }
 
     @Test
-    public void canCancelReservation_returnsTrue() {
+    void canCancelReservation_returnsTrue() {
         assertTrue(hotelChain.canCancelReservation());
     }
 
     @Test
-    public void canCheckInGuest_returnsTrue() {
+    void canCheckInGuest_returnsTrue() {
         assertTrue(hotelChain.canCheckInGuest());
     }
 
     @Test
-    public void canCheckOutGuest_returnsTrue() {
+    void canCheckOutGuest_returnsTrue() {
         assertTrue(hotelChain.canCheckOutGuest());
     }
 
     // ---------- addHotel() test ----------
 
     @Test
-    public void addHotel_validHotel_noException() {
+    void addHotel_validHotel_noException() {
         Hotel hotel = new Hotel(new Name("Test Hotel"));
-        hotelChain.addHotel(hotel);
+        assertDoesNotThrow(() -> hotelChain.addHotel(hotel));
     }
 }

@@ -1,31 +1,26 @@
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RoomTypeTest {
 
-    // ---------- Constructor tests ----------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_costZero_throwsException() {
-        new RoomType("Single", 0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_negativeCost_throwsException() {
-        new RoomType("Double", -100);
+    @Test
+    void constructor_costZero_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new RoomType("Single", 0));
     }
 
     @Test
-    public void constructor_validArguments_createsRoomType() {
+    void constructor_negativeCost_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new RoomType("Double", -100));
+    }
+
+    @Test
+    void constructor_validArguments_createsRoomType() {
         RoomType roomType = new RoomType("Deluxe", 5000.0);
         assertNotNull(roomType);
     }
 
-    // ---------- getCost() tests ----------
-
     @Test
-    public void getCost_returnsCorrectCost() {
+    void getCost_returnsCorrectCost() {
         RoomType roomType = new RoomType("Suite", 7500.50);
         assertEquals(7500.50, roomType.getCost(), 0.001);
     }

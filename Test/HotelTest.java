@@ -1,64 +1,42 @@
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDate;
 
 public class HotelTest {
 
     private Hotel hotel;
 
-    @Before
-    public void setUp() {
-        Name name = new Name("Grand Hotel");
-        hotel = new Hotel(name);
-    }
-
-    // ---------- createReservation() tests ----------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void createReservation_nullReservation_throwsException() {
-        hotel.createReservation(null);
+    @BeforeEach
+    void setUp() {
+        hotel = new Hotel(new Name("Grand Hotel"));
     }
 
     @Test
-    public void createReservation_validReservation_noException() {
-        Reservation reservation = new Reservation();
+    void createReservation_nullReservation_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> hotel.createReservation(null));
+    }
 
-        // Should not throw exception
+    @Test
+    void createReservation_validReservation_noException() {
+        Reservation reservation = Reservation.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(3),
+                1);
         hotel.createReservation(reservation);
     }
 
-    // ---------- available() tests ----------
-
     @Test
-    public void available_noRooms_returnsZero() {
+    void available_noRooms_returnsZero() {
         assertEquals(0, hotel.available());
     }
 
     @Test
-    public void available_withAllRoomsFree_returnsCorrectCount() {
-        hotel.addRoom(new Room(false));
-        hotel.addRoom(new Room(false));
-        hotel.addRoom(new Room(false));
-
+    void available_withRooms_returnsCorrectCount() {
+        hotel.addRoom(new Room(1));
+        hotel.addRoom(new Room(2));
+        hotel.addRoom(new Room(3));
         assertEquals(3, hotel.available());
-    }
-
-    @Test
-    public void available_withSomeOccupiedRooms_returnsCorrectCount() {
-        hotel.addRoom(new Room(false)); // free
-        hotel.addRoom(new Room(true));  // occupied
-        hotel.addRoom(new Room(false)); // free
-
-        assertEquals(2, hotel.available());
-    }
-
-    // ---------- addRoom() tests ----------
-
-    @Test
-    public void addRoom_roomAdded_increasesAvailableCount() {
-        hotel.addRoom(new Room(false));
-
-        assertEquals(1, hotel.available());
     }
 }

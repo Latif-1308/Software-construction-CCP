@@ -1,44 +1,30 @@
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservePayerTest {
 
-    // ---------- Constructor tests ----------
-
     @Test
-    public void constructor_validArguments_createsReservePayer() {
-        CreditCard card = new CreditCard();
-        Identity id = new Identity();
-
+    void constructor_validArguments_createsReservePayer() {
+        CreditCard card = new CreditCard("123456789012");
+        Identity id = new Identity("CNIC-123456789");
         ReservePayer payer = new ReservePayer(card, id);
-
         assertNotNull(payer);
     }
 
-    // ---------- Factory method tests ----------
-
     @Test
-    public void create_validArguments_returnsReservePayer() {
-        CreditCard card = new CreditCard();
-        Identity id = new Identity();
-
+    void create_validArguments_returnsReservePayer() {
+        CreditCard card = new CreditCard("123456789012");
+        Identity id = new Identity("CNIC-123456789");
         ReservePayer payer = ReservePayer.create(card, id);
-
         assertNotNull(payer);
     }
 
     @Test
-    public void create_returnsNewInstanceEachTime() {
-        CreditCard card = new CreditCard();
-        Identity id = new Identity();
-
+    void create_returnsNewInstanceEachTime() {
+        CreditCard card = new CreditCard("123456789012");
+        Identity id = new Identity("CNIC-123456789");
         ReservePayer payer1 = ReservePayer.create(card, id);
         ReservePayer payer2 = ReservePayer.create(card, id);
-
         assertNotSame(payer1, payer2);
     }
-}
- ReservePayerTest {
-    
 }

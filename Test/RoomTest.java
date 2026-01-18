@@ -1,59 +1,51 @@
-import org.junit.jupiter.api.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RoomTest {
 
     private Room room;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         room = new Room(101);
     }
 
-    // ---------- Constructor tests ----------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_invalidRoomNumber_throwsException() {
-        new Room(0);
+    @Test
+    void constructor_invalidRoomNumber_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Room(0));
     }
 
     @Test
-    public void constructor_validRoomNumber_createsRoom() {
+    void constructor_validRoomNumber_createsRoom() {
         Room room = new Room(1);
         assertNotNull(room);
     }
 
-    // ---------- createGuest() tests ----------
-
     @Test
-    public void createGuest_roomEmpty_setsOccupied() {
-        Guest guest = new Guest();
+    void createGuest_roomEmpty_setsOccupied() {
+        Guest guest = Guest.create(new Name("John"), new Address("123 Street"));
         room.createGuest(guest);
-
         assertTrue(room.isOccupied());
     }
 
-    @Test(expected = IllegalStateException.class)
-    public void createGuest_roomAlreadyOccupied_throwsException() {
-        Guest guest1 = new Guest();
-        Guest guest2 = new Guest();
-
+    @Test
+    void createGuest_roomAlreadyOccupied_throwsException() {
+        Guest guest1 = Guest.create(new Name("John"), new Address("123 Street"));
+        Guest guest2 = Guest.create(new Name("Alice"), new Address("456 Street"));
         room.createGuest(guest1);
-        room.createGuest(guest2); // should fail
+        assertThrows(IllegalStateException.class, () -> room.createGuest(guest2));
     }
 
-    // ---------- isOccupied() tests ----------
-
     @Test
-    public void isOccupied_initiallyFalse() {
+    void isOccupied_initiallyFalse() {
         assertFalse(room.isOccupied());
     }
 
     @Test
-    public void isOccupied_afterAddingGuest_returnsTrue() {
-        room.createGuest(new Guest());
+    void isOccupied_afterAddingGuest_returnsTrue() {
+        Guest guest = Guest.create(new Name("John"), new Address("123 Street"));
+        room.createGuest(guest);
         assertTrue(room.isOccupied());
     }
 }

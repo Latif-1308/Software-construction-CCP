@@ -1,31 +1,26 @@
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NameTest {
 
-    // ---------- Constructor validation tests ----------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_nullName_throwsException() {
-        new Name(null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_blankName_throwsException() {
-        new Name("   ");
+    @Test
+    void constructor_nullName_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Name(null));
     }
 
     @Test
-    public void constructor_validName_createsName() {
+    void constructor_blankName_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Name("   "));
+    }
+
+    @Test
+    void constructor_validName_createsName() {
         Name name = new Name("Grand Hotel");
         assertNotNull(name);
     }
 
-    // ---------- getValue() tests ----------
-
     @Test
-    public void getValue_returnsCorrectValue() {
+    void getValue_returnsCorrectValue() {
         Name name = new Name("Luxury Inn");
         assertEquals("Luxury Inn", name.getValue());
     }

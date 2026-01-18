@@ -1,60 +1,48 @@
 import org.junit.jupiter.api.Test;
-
-import java.time.jupiter.api.LocalDate;
-
-import static org.junit.jupiter.api.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import java.time.LocalDate;
 
 public class ReservationTest {
 
-    // ---------- Constructor tests ----------
-
-    @Test(expected = IllegalArgumentException.class)
-    public void constructor_startDateAfterEndDate_throwsException() {
+    @Test
+    void constructor_startDateAfterEndDate_throwsException() {
         LocalDate reservationDate = LocalDate.now();
         LocalDate startDate = LocalDate.of(2026, 1, 10);
         LocalDate endDate = LocalDate.of(2026, 1, 5);
-
-        new Reservation(reservationDate, startDate, endDate, 1);
+        assertThrows(IllegalArgumentException.class, () -> new Reservation(reservationDate, startDate, endDate, 1));
     }
 
     @Test
-    public void constructor_validDates_createsReservation() {
+    void constructor_validDates_createsReservation() {
         LocalDate reservationDate = LocalDate.now();
         LocalDate startDate = LocalDate.of(2026, 1, 5);
         LocalDate endDate = LocalDate.of(2026, 1, 10);
-
-        Reservation reservation =
-                new Reservation(reservationDate, startDate, endDate, 1);
-
-        assertNotNull(reservation);
-    }
-
-    // ---------- Factory method tests ----------
-
-    @Test
-    public void create_validArguments_returnsReservation() {
-        LocalDate reservationDate = LocalDate.now();
-        LocalDate startDate = LocalDate.of(2026, 2, 1);
-        LocalDate endDate = LocalDate.of(2026, 2, 5);
-
-        Reservation reservation =
-                Reservation.create(reservationDate, startDate, endDate, 2);
-
+        Reservation reservation = new Reservation(reservationDate, startDate, endDate, 1);
         assertNotNull(reservation);
     }
 
     @Test
-    public void create_returnsNewInstanceEachTime() {
-        LocalDate reservationDate = LocalDate.now();
-        LocalDate startDate = LocalDate.of(2026, 3, 1);
-        LocalDate endDate = LocalDate.of(2026, 3, 5);
+    void create_validArguments_returnsReservation() {
+        Reservation reservation = Reservation.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(3),
+                1);
+        assertNotNull(reservation);
+    }
 
-        Reservation r1 = Reservation.create(reservationDate, startDate, endDate, 3);
-        Reservation r2 = Reservation.create(reservationDate, startDate, endDate, 3);
-
+    @Test
+    void create_returnsNewInstanceEachTime() {
+        Reservation r1 = Reservation.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(3),
+                1);
+        Reservation r2 = Reservation.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(1),
+                LocalDate.now().plusDays(3),
+                1);
         assertNotSame(r1, r2);
     }
-}
- ReservationTest {
-    
 }

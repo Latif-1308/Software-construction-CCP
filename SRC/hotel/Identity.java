@@ -1,3 +1,4 @@
+package hotel;
 public class Identity {
     private final String id;
 

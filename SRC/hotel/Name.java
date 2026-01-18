@@ -1,3 +1,4 @@
+package hotel;
 public class Name {
     private final String value;
 

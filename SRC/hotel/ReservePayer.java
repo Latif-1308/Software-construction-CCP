@@ -1,3 +1,4 @@
+package hotel;
 public class ReservePayer {
     private final CreditCard creditCardDetails;
     private final Identity id;

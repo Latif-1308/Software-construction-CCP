@@ -1,3 +1,4 @@
+package hotel;
 public class Address {
     private final String details;
 

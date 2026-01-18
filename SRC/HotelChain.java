@@ -1,8 +1,8 @@
+package hotel;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HotelChain {
-    
     private final List<Hotel> hotels = new ArrayList<>();
 
     public void makeReservation(Reservation reservation) {
